@@ -7,9 +7,9 @@
 LiquidCrystal_I2C lcd(0x3F,16,2); // PROVJERITI MOZDA JE 0x27
 
 // DEFINIRANJE VARIJABLI ZA VRIJEME PALJENJA MOTORA
-String timerHours = "09";
-String timerMinutes = "04";
-String timerSeconds = "05";
+String timerHours = "22";
+String timerMinutes = "45";
+String timerSeconds = "20";
 
 // DEFINIRANJE VARIJABLE ZA PALJENJE MOTORA
 int motor = 0;
@@ -32,20 +32,14 @@ const int buttonPin = 6;
 // DEFINIRANJE VARIJABLE ZA MANUALNO PALJENJE MOTORA
 int buttonState = 0;
 
-
+ 
 void setup()  {
   Serial.begin(9600);
   pinMode(relayPin, OUTPUT);
   pinMode(13, OUTPUT); // ZA DEBBUGING
-  setTime(9, 4, 0, 26, 03, 2018); // INICIJALNO POSTAVLJANJE VREMENA
-  lcd.begin();
+  setTime(22, 45, 0, 26, 03, 2018); // INICIJALNO POSTAVLJANJE VREMENA
+  lcd.init();
   lcd.backlight();
-  lcd.setCursor(0, 0);
-  lcd.print("TIME:");
-  lcd.setCursor(0,1);
-  lcd.print("ON:");
-  lcd.setCursor(10,1);
-  lcd.print("FOR:");
 }
 
 void loop() {
@@ -56,7 +50,6 @@ void loop() {
   String minutesPrint = String(minutes);
   String secondsPrint = String(seconds);
   int periodPrint = period/1000;
-  Serial.println(periodPrint);
   
   if (hours < 10) {
     hoursPrint = "0" + hoursPrint;
@@ -67,7 +60,13 @@ void loop() {
   if (seconds < 10) {
     secondsPrint = "0" + secondsPrint;
   }
-
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("TIME:");
+  lcd.setCursor(0,1);
+  lcd.print("ON:");
+  lcd.setCursor(10,1);
+  lcd.print("FOR:");
   lcd.setCursor(5,0);
   lcd.print(hoursPrint);
   lcd.print(":");
