@@ -26,6 +26,8 @@ int currentTimer;
 
 int motor = 0;
 
+int counter = 0;
+
 // DEFINIRANJE VARIJABLI KOLIKO CE MOTOR BITI UPALJEN
 unsigned long currentMillis;
 long period = feedTimer * 1000; // VRIJEME BACANJA HRANE
@@ -52,6 +54,8 @@ void setup ()  {
  setTime(07, 29, 55, 26, 03, 2018); 
  attachInterrupt (0,isr,FALLING);   // interrupt 0 is always connected to pin 2 on Arduino UNO
 
+ 
+
 }
   
 void loop ()  {  //Main program loop - most things in here!
@@ -67,6 +71,9 @@ void loop ()  {  //Main program loop - most things in here!
     printDigits(feedMinute);
     lcd.setCursor(8,0);
     printDigits(feedTimer);
+    lcd.setCursor(12,1);
+ lcd.print("C:");
+ lcd.print(counter);
     
     
     
@@ -190,6 +197,7 @@ void loop ()  {  //Main program loop - most things in here!
   if(hour() == feedHour && minute() == feedMinute && second() == 0) {
     motor = 1;
     currentMillis = millis();
+    
   }
 
   if(motor == 1) {
@@ -198,6 +206,7 @@ void loop ()  {  //Main program loop - most things in here!
     } else {
       digitalWrite(13,LOW);
       motor = 0;
+      counter = counter + 1;
     }
   }
 }   // End of main Loop
